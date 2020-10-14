@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 function Header(props) {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav
+      className="navbar navbar-expand-lg navbar-dark bg-dark"
+      style={{ fontFamily: "Raleway" }}
+    >
       <div className="container">
         <Link className="navbar-brand" to="/">
           REDUX TODO
@@ -24,7 +27,7 @@ function Header(props) {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav">
-            <li className="nav-item">
+            <li className="nav-item" style={{ fontFamily: "Raleway" }}>
               <Link className="nav-link " to="/register">
                 REGISTER
               </Link>
