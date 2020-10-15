@@ -6,6 +6,7 @@ import SideBar from "./component/sidebar/sidebar.component";
 
 import HomePage from "./page/homepage/homepage.page";
 import AddTodo from "./component/addtodo/addtodo.component";
+import TodoList from "./component/todolist/todolist.component";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Switch>
               <Route exact path="/home" component={HomePage} />
               <Route exact path="/addTodo" component={AddTodo} />
-              {/* <Route exact path="/allTodo" component={AllTodo} /> */}
+              <Route exact path="/allTodo" component={TodoList} />
               {/* <Route exact path="/statistics" component={Statistics} /> */}
               {/* <Route exact path="/userInfo" component={UserInfo} /> */}
             </Switch>
