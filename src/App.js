@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { memo } from 'react';
+import { Switch, Route } from 'react-router-dom';
+
+import Header from './component/header/header.component';
+import SideBar from './component/sidebar/sidebar.component';
+
+import HomePage from './page/homepage/homepage.page';
+import AddTodo from './component/addtodo/addtodo.component';
+import TodoList from './component/todolist/todolist.component';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <div className="display-1">Hi</div>
-      </header>
+    <div>
+      <Header />
+      <div className="container">
+        <div className="row mt-3">
+          <div className="col-sm-6 col-md-3">
+            {/* SIDEBAR */}
+            <SideBar />
+          </div>
+          <div className="col-sm-6 col-md-9">
+            {/* COMPONENT */}
+            <Switch>
+              <Route exact path="/home" component={HomePage} />
+              <Route exact path="/addTodo" component={AddTodo} />
+              <Route exact path="/allTodo" component={TodoList} />
+              {/* <Route exact path="/statistics" component={Statistics} /> */}
+              {/* <Route exact path="/userInfo" component={UserInfo} /> */}
+            </Switch>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
