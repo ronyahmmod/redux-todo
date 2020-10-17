@@ -11,6 +11,18 @@ class AddTodo extends Component {
       remark: "",
       alert: "",
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
   }
 
   render() {
@@ -31,6 +43,8 @@ class AddTodo extends Component {
                     id="name"
                     placeholder="Enter todo name"
                     className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.name}
                     required
                   />
                 </div>
@@ -42,6 +56,8 @@ class AddTodo extends Component {
                     id="details"
                     placeholder="Enter details of this todo"
                     className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.details}
                     required
                   ></textarea>
                 </div>
@@ -54,6 +70,8 @@ class AddTodo extends Component {
                     id="startDate"
                     className="form-control"
                     placeholder="DD-MM-YYYY:HH-MM-SS"
+                    onChange={this.handleChange}
+                    value={this.state.startDate}
                     required
                   />
                 </div>
@@ -66,6 +84,8 @@ class AddTodo extends Component {
                     id="endDate"
                     className="form-control"
                     placeholder="DD-MM-YYYY:HH-MM-SS"
+                    onChange={this.handleChange}
+                    value={this.state.endDate}
                     required
                   />
                 </div>
@@ -78,6 +98,8 @@ class AddTodo extends Component {
                     id="remark"
                     placeholder="Enter remark"
                     className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.remark}
                     required
                   />
                 </div>
@@ -88,7 +110,8 @@ class AddTodo extends Component {
                     type="radio"
                     id="true"
                     name="alert"
-                    value="true"
+                    onChange={this.handleChange}
+                    value={this.state.alert}
                   />
                   <label className="form-check-label" htmlFor="true">
                     Alert On
@@ -100,7 +123,8 @@ class AddTodo extends Component {
                     type="radio"
                     id="false"
                     name="alert"
-                    value="false"
+                    onChange={this.handleChange}
+                    value={this.state.alert}
                     checked
                   />
                   <label className="form-check-label" htmlFor="false">
@@ -109,10 +133,14 @@ class AddTodo extends Component {
                 </div>
 
                 <div className="dropdown-divider"></div>
-                <button type="submit" className="btn btn-primary mr-3">
+                <button
+                  type="submit"
+                  className="btn btn-primary mr-3"
+                  onClick={this.handleSubmit}
+                >
                   Add Todo
                 </button>
-                <button type="submit" className="btn btn-danger">
+                <button type="reset" className="btn btn-danger">
                   Reset Form
                 </button>
               </form>

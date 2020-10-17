@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { auth } from "../../firebase/firebase.utils";
 
 function Header(props) {
+  const { user } = props;
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark bg-dark"
@@ -26,22 +29,36 @@ function Header(props) {
           className="collapse navbar-collapse d-flex justify-content-end"
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav">
-            <li className="nav-item" style={{ fontFamily: "Raleway" }}>
-              <Link className="nav-link " to="/register">
-                REGISTER
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                LOGIN
-              </Link>
-            </li>
-          </ul>
+          {user ? (
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link to="" onClick={() => auth.signOut()} className="nav-link">
+                  LOGOUT
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="navbar-nav">
+              <li className="nav-item" style={{ fontFamily: "Raleway" }}>
+                <Link className="nav-link " to="/">
+                  REGISTER
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/">
+                  LOGIN
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>
   );
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  user: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(Header);

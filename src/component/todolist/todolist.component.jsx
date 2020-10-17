@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { firestore } from "firebase";
+// import { firestore } from "firebase";
 
 class TodoList extends Component {
   constructor(props) {
@@ -26,7 +26,6 @@ class TodoList extends Component {
               className="form-control mr-sm-2"
               type="search"
               placeholder="Search"
-              aria-level="Search"
               onChange={this.handleChange}
             />
             <button className="btn btn-outline-success my-2 my-sm-0">
