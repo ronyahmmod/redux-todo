@@ -1,4 +1,5 @@
 import React, { Component, memo } from 'react';
+import { addTodo as addTodoToDB } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { addTodo } from '../../redux/todo/todo.actions';
 
@@ -13,20 +14,26 @@ class AddTodo extends Component {
       remark: '',
       alert: '',
     };
-    this.addTodo = this.addTodo.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  addTodo(e) {
-    e.preventDefault();
-    const todo = this.state;
-    this.props.addTodo(todo);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value,
     });
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    if (this.state) {
+      const todoRef = addTodoToDB(this.state);
+      todoRef.onSnapShot((snapshot) => {
+        this.props.addTodoToReducer(snapshot.data());
+      });
+    } else {
+      this.props.addTodoToReducer(this.state);
+    }
   }
 
   render() {
@@ -48,6 +55,7 @@ class AddTodo extends Component {
                     placeholder="Enter todo name"
                     className="form-control"
                     onChange={this.handleChange}
+                    value={this.state.name}
                     required
                   />
                 </div>
@@ -60,6 +68,7 @@ class AddTodo extends Component {
                     placeholder="Enter details of this todo"
                     className="form-control"
                     onChange={this.handleChange}
+                    value={this.state.details}
                     required
                   ></textarea>
                 </div>
@@ -73,6 +82,7 @@ class AddTodo extends Component {
                     className="form-control"
                     placeholder="DD-MM-YYYY:HH-MM-SS"
                     onChange={this.handleChange}
+                    value={this.state.startDate}
                     required
                   />
                 </div>
@@ -86,6 +96,7 @@ class AddTodo extends Component {
                     className="form-control"
                     placeholder="DD-MM-YYYY:HH-MM-SS"
                     onChange={this.handleChange}
+                    value={this.state.endDate}
                     required
                   />
                 </div>
@@ -99,6 +110,7 @@ class AddTodo extends Component {
                     placeholder="Enter remark"
                     className="form-control"
                     onChange={this.handleChange}
+                    value={this.state.remark}
                     required
                   />
                 </div>
@@ -109,8 +121,8 @@ class AddTodo extends Component {
                     type="radio"
                     id="true"
                     name="alert"
-                    value="true"
                     onChange={this.handleChange}
+                    value={this.state.alert}
                   />
                   <label className="form-check-label" htmlFor="true">
                     Alert On
@@ -122,8 +134,8 @@ class AddTodo extends Component {
                     type="radio"
                     id="false"
                     name="alert"
-                    value="false"
                     onChange={this.handleChange}
+                    value={this.state.alert}
                     checked
                   />
                   <label className="form-check-label" htmlFor="false">
@@ -135,7 +147,7 @@ class AddTodo extends Component {
                 <button
                   type="submit"
                   className="btn btn-primary mr-3"
-                  onClick={this.addTodo}
+                  onClick={this.handleSubmit}
                 >
                   Add Todo
                 </button>
@@ -150,9 +162,8 @@ class AddTodo extends Component {
     );
   }
 }
-
 const mapDispatchToProps = (dispatch) => ({
-  addTodo: (todo) => dispatch(addTodo(todo)),
+  addTodoToReducer: (todo) => dispatch(addTodo(todo)),
 });
 
-export default connect(null, mapDispatchToProps)(memo(AddTodo));
+export default connect(mapDispatchToProps)(AddTodo);

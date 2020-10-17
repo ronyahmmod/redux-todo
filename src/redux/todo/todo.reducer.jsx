@@ -4,7 +4,12 @@ const INITIAL_STATE = {
 
 const todoReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "ADD_TODO":
+    case 'ADD_TODO':
+      return {
+        ...state,
+        todos: [...state.todos, action.payload],
+      };
+    case 'SET_TODOS':
       return {
         ...state,
         todos: [...state.todos, action.payload],
