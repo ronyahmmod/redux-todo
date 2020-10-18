@@ -1,18 +1,18 @@
-import React, { Component, memo } from 'react';
-import { addTodo as addTodoToDB } from '../../firebase/firebase.utils';
-import { connect } from 'react-redux';
-import { addTodo } from '../../redux/todo/todo.actions';
+import React, { Component } from "react";
+// import { addTodo as addTodoToDB } from "../../firebase/firebase.utils";
+import { connect } from "react-redux";
+import { addTodo } from "../../redux/todo/todo.actions";
 
 class AddTodo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      details: '',
-      startDate: '',
-      endDate: '',
-      remark: '',
-      alert: '',
+      name: "",
+      details: "",
+      startDate: "",
+      endDate: "",
+      remark: "",
+      alert: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,20 +26,22 @@ class AddTodo extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    if (this.state) {
-      const todoRef = addTodoToDB(this.state);
-      todoRef.onSnapShot((snapshot) => {
-        this.props.addTodoToReducer(snapshot.data());
-      });
-    } else {
-      this.props.addTodoToReducer(this.state);
-    }
+    // if (this.state) {
+    //   const todoRef = await addTodoToDB(this.state);
+    //   todoRef.onSnapshot((snapshot) => {
+    //     this.props.addTodoToReducer(snapshot.data());
+    //     console.log(snapshot.data());
+    //   });
+    // } else {
+    //   this.props.addTodoToReducer(this.state);
+    // }
+    this.props.addTodoToReducer(this.state);
   }
 
   render() {
     return (
       <div className="container">
-        <h5 className="display-5 ml-5" style={{ fontFamily: 'Raleway' }}>
+        <h5 className="display-5 ml-5" style={{ fontFamily: "Raleway" }}>
           ADD A TODO
         </h5>
         <div className="col-sm-6 col-md-10">
@@ -122,7 +124,7 @@ class AddTodo extends Component {
                     id="true"
                     name="alert"
                     onChange={this.handleChange}
-                    value={this.state.alert}
+                    value={true}
                   />
                   <label className="form-check-label" htmlFor="true">
                     Alert On
@@ -135,8 +137,7 @@ class AddTodo extends Component {
                     id="false"
                     name="alert"
                     onChange={this.handleChange}
-                    value={this.state.alert}
-                    checked
+                    value={false}
                   />
                   <label className="form-check-label" htmlFor="false">
                     Alert Off
@@ -166,4 +167,4 @@ const mapDispatchToProps = (dispatch) => ({
   addTodoToReducer: (todo) => dispatch(addTodo(todo)),
 });
 
-export default connect(mapDispatchToProps)(AddTodo);
+export default connect(null, mapDispatchToProps)(AddTodo);
